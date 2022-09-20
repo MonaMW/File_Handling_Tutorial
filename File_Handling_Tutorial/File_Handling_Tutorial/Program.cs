@@ -54,27 +54,19 @@ namespace File_Handling_Tutorial
                 eintraege.Add(sr.ReadLine().Split(';'));
             }
 
-            //neues Objekt von StreamWriter sw
-            //StreamWriter writer = new StreamWriter(@"C:/010 Projects/016_File_Handling_Tutorial/Junge_Huepfer.csv");
-
-            //mit using braucht man kein writer.Close() und writer.Dispose()
-            using (StreamWriter writer = new StreamWriter(@"C:/010 Projects/016_File_Handling_Tutorial/Junge_Huepfer.csv"))
-                for (int i = 0; i < eintraege.Count; i++)
-                {
-                    //string.Join() nimmt Separator entgegen und macht eine Liste string.Value
-                    //ein StringArray von Parametern zu einem String zusammen fügen
-                    if (Convert.ToInt32(eintraege[i][2]) < 20 && eintraege[i][0] == "m")
+            for(int j = 18; j <= 100; j++)
+            {
+                using (StreamWriter writer = new StreamWriter($@"C:/010 Projects/016_File_Handling_Tutorial/Gewichte_{j}.csv", true))  //true am Ende = if(File.Exists())
+                    for (int i = 0; i < eintraege.Count; i++)
                     {
-                        writer.WriteLine(string.Join(";", eintraege[i]));
-                        Console.WriteLine(string.Join("\t", eintraege[i]));
+                        if (Convert.ToInt32(eintraege[i][2]) == j)
+                        {
+                            writer.WriteLine(string.Join(";", eintraege[i]));
+                            Console.WriteLine(string.Join("\t", eintraege[i]));
+                        }
                     }
-
-                    //"\t" = Tabulator
-                    //"\n" = neue Zeile
-                }
-            //Programm schließen und "beenden", sonst kann nur noch als ReadOnly auf das File zugegriffen werden
-            //writer.Close();
-            //writer.Dispose();
+            }
+            
             Console.ReadLine();
         }
     }
