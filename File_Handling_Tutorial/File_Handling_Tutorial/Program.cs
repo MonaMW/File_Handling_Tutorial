@@ -11,10 +11,28 @@ namespace File_Handling_Tutorial
     {
         static void Main(string[] args)
         {
-            FileStream fs = new FileStream("C:\\csharpfile.txt", FileMode.Create);
-            fs.Close();
-            Console.Write("File has been created and the Path is C:\\csharpfile.txt");
-            Console.ReadKey();
+            FileInfo fi = new FileInfo("T:/WKH_EXC/Trash/cbec/BMI-data.csv");
+            //fi.CopyTo("C:/010 Projects/016_File_Handling_Tutorial/meineDatei13.csv");
+
+            //FileInfo fi_neu = new FileInfo("C:/010 Projects/016_File_Handling_Tutorial/meineDatei13.csv");
+            //fi_neu.Delete();
+
+            Console.WriteLine("Gebe mir den Pfad an, wohin die Datei geschrieben werden soll.");
+            string path = Console.ReadLine();
+            path.Replace("\\", "\\\\");
+            DirectoryInfo di = new DirectoryInfo(path);
+            while(di.Exists == false)
+            {
+                Console.WriteLine("Der Pfad existiert nicht, gib mir einen neuen.");
+                path = Console.ReadLine();
+                di = new DirectoryInfo(path);
+            }
+            Console.WriteLine("Wie soll die Datei heißen?");
+            string filename = Console.ReadLine();
+
+            fi.CopyTo(path + "\\" + filename);
+
+            Console.ReadLine();
         }
     }
 }
